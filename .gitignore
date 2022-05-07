@@ -1,0 +1,4 @@
+# Project exclude paths
+/.gradle/
+/kotching-main/build/
+/kotching-test/build/
