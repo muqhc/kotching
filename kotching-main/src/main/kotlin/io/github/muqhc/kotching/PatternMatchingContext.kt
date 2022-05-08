@@ -1,41 +1,44 @@
 package io.github.muqhc.kotching
 
-import kotlin.reflect.KClass
-import kotlin.reflect.cast
+import io.github.muqhc.kotching.util.Exported
 import kotlin.reflect.full.*
 import kotlin.reflect.jvm.jvmErasure
 
-class PatternMatchingContext<T>(private val input: T) {
+@KotchingDsl
+class PatternMatchingContext<T>(val input: T) {
     internal var isEnd = false
-    internal lateinit var result: Any
+    internal var result = Exported(null)
 
+    @KotchingDsl
     fun <L : Function<Any>> case(activePattern: ActivePattern<T,L>, running: L) {
         if (isEnd) return
-        val inputKClass = activePattern::matching.valueParameters[0].type.jvmErasure
         try {
             result = activePattern.matching(
                 input, running
-            )
+            ).let { Exported { it } }
             isEnd = true
-        } catch (e: ClassCastException) { }
+        } catch (e: ClassCastException) {  }
     }
 
+    @KotchingDsl
     operator fun <L : Function<Any>> ActivePattern<T,L>.invoke(running: L) {
-        case(this,running)
+        case(this, running)
     }
 
     @Suppress("UNCHECKED_CAST")
+    @KotchingDsl
     fun <T> case(running: (T) -> Any) {
         if (isEnd) return
         (input as? T)?.let {
-            result = running(it)
+            result = Exported { running(it) }
             isEnd = true
         }
     }
 
+    @KotchingDsl
     fun else_(running: (T) -> Any) {
         if (isEnd) return
-        result = running(input)
+        result = Exported { running(input) }
         isEnd = true
     }
 }

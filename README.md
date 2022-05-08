@@ -3,22 +3,29 @@ pattern matching in kotlin
 
 ## Example Usage
 ```kotlin
+// import
+import io.github.muqhc.kotching.ActivePattern
+import io.github.muqhc.kotching.case
+import io.github.muqhc.kotching.match
+import io.github.muqhc.kotching.matching
+import io.github.muqhc.kotching.util.ActivePattern
+
 // Just a 'Color' class
 class Color(val hex: Int)
 
 val RGB = // create Active Pattern for 'Color'
-    ActivePattern<Color, (red:Int,green:Int,blue:Int) -> Any> { input, lambda ->
+    ActivePattern<Color, (red:Int,green:Int,blue:Int) -> Any> {
         val blue = input.hex % 256
         val green = (input.hex shr 8) % 256
         val red = (input.hex shr 16) % 256
-        lambda(red,green,blue)
+        export(red,green,blue)
     }
 
 // 'Car' the class contains Active Pattern ( with Companion )
 class Car(val speed: Double, val year: Int) {
     // create Active Pattern with Companion Object
-    companion object: ActivePattern<Car, (speed:Double,year:Int) -> Any> by ActivePattern({ input, lambda ->
-        lambda(input.speed,input.year)
+    companion object: ActivePattern<Car, (speed:Double,year:Int) -> Any> by ActivePattern({
+        export(input.speed, input.year)
     })
 }
 
@@ -26,8 +33,8 @@ class Car(val speed: Double, val year: Int) {
 fun main() {
     // Just an object list for test
     val objList = listOf(
-        Color(0xABCDEF),
         Car(101.5,1997),
+        Color(0xABCDEF),
         Color(0xAAFFAA),
         Color(0x990000),
         Car(10105.2,4096),
@@ -48,12 +55,43 @@ fun main() {
                 println("Car(speed=$speed,year=$year)")
             }
             // when match nothing
-            else_ { throw Exception("Not a Color") }
+            else_ { throw Exception("Not a Color or Car") }
         }
     }
+
+    // You can do pattern match like this
+    objList.map(matching {
+        case(RGB) { red, green, blue ->
+            println("Color(red=$red,green=$green,blue=$blue)")
+        }
+        case(Car) { speed, year ->
+            println("Car(speed=$speed,year=$year)")
+        }
+        else_ { throw Exception("Not a Color or Car") }
+    })
+
+    // Do Single Pattern match
+    Color(0xABCDEF).case(RGB) { _,_,_ -> println("hello") }
+
+    // get value from pattern matching
+    val v1 = match(Color(0x123456)) {
+        case(RGB) { red, green, blue ->
+            "Color(red=$red,green=$green,blue=$blue)"
+        }
+    }.get() as String
+
+    // get value from pattern matching with property delegation
+    val v2: String by match(Color(0x654321)) {
+        case(RGB) { red, green, blue ->
+            "Color(red=$red,green=$green,blue=$blue)"
+        }
+    }
+
+    println(v1)
+    println(v2)
 }
 ```
 [io.github.muqhc.kotching.test.PlaygroundKt](kotching-test/src/main/kotlin/io/github/muqhc/kotching/test/Playground.kt)
 
 ## Note
-+ Inspired by Active Pattern in F#.
++ Inspired by Active Pattern in F#(programming language).
