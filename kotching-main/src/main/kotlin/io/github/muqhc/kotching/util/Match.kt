@@ -16,10 +16,7 @@ fun <T> T.match(block: PatternMatchingContext<T>.() -> Unit) =
 
 @KotchingDsl
 fun <T> matching(block: PatternMatchingContext<T>.() -> Unit) =
-    { input: T ->
-        PatternMatchingContext(input).apply(block)
-            .run { if (isEnd) result else throw NoMatchException("Couldn't match any patterns or types.") }
-    }
+    { input: T -> match(input,block) }
 
 @KotchingDsl
 @Suppress("UNCHECKED_CAST")
