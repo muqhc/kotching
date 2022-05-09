@@ -91,7 +91,7 @@ fun main() {
     println(v2)
 }
 ```
-[io.github.muqhc.kotching.test.PlaygroundKt](kotching-test/src/main/kotlin/io/github/muqhc/kotching/test/Playground.kt)
+[io.github.muqhc.kotching.test.Playground0Kt](kotching-test/src/main/kotlin/io/github/muqhc/kotching/test/Playground0.kt)
 
 ## Note
 + Inspired by Active Pattern in F#(programming language).

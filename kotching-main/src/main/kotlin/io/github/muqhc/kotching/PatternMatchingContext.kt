@@ -13,16 +13,13 @@ class PatternMatchingContext<T>(val input: T) {
     fun <L : Function<Any>> case(activePattern: ActivePattern<T,L>, running: L) {
         if (isEnd) return
         try {
-            result = activePattern.matching(
-                input, running
-            ).let { Exported { it } }
-            isEnd = true
+            if (activePattern.checkRequire(input)) {
+                result = activePattern.matching(
+                    input, running
+                ).let { Exported { it } }
+                isEnd = true
+            }
         } catch (e: ClassCastException) {  }
-    }
-
-    @KotchingDsl
-    operator fun <L : Function<Any>> ActivePattern<T,L>.invoke(running: L) {
-        case(this, running)
     }
 
     @Suppress("UNCHECKED_CAST")
