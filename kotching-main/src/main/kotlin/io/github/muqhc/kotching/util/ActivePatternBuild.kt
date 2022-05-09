@@ -13,7 +13,7 @@ fun <T,L:Function<Any>> ActivePattern(init: ActivePatternBuildContext<T, L>.() -
 
 fun <T,L:Function<Any>> ActivePattern<T,L>.require(predicate: ActivePatternPredicateBuildContext<T>.() -> Boolean): ActivePattern<T,L> =
     object : ActivePattern<T,L> by this {
-        override fun checkRequire(input: @UnsafeVariance T): Boolean = ActivePatternPredicateBuildContext(input).run(predicate)
+        override fun checkRequire(input: @UnsafeVariance T): Boolean = super.checkRequire(input) && ActivePatternPredicateBuildContext(input).run(predicate)
     }
 
 operator fun <T,L:Function<Any>> ActivePattern<T,L>.invoke(predicate: ActivePatternPredicateBuildContext<T>.() -> Boolean): ActivePattern<T,L> =
