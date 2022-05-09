@@ -4,11 +4,8 @@ pattern matching in kotlin
 ## Example Usage
 ```kotlin
 // import
-import io.github.muqhc.kotching.ActivePattern
-import io.github.muqhc.kotching.case
-import io.github.muqhc.kotching.match
-import io.github.muqhc.kotching.matching
-import io.github.muqhc.kotching.util.ActivePattern
+import io.github.muqhc.kotching.*
+import io.github.muqhc.kotching.util.*
 
 // Just a 'Color' class
 class Color(val hex: Int)
