@@ -7,7 +7,7 @@ pattern matching in kotlin
 package io.github.muqhc.kotching.test
 
 import io.github.muqhc.kotching.*
-import io.github.muqhc.kotching.util.*
+import io.github.muqhc.kotching.dsl.*
 
 // Just a 'Color' class
 class Color(val hex: Int)

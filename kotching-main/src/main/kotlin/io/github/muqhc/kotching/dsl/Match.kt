@@ -1,5 +1,8 @@
-package io.github.muqhc.kotching
+package io.github.muqhc.kotching.dsl
 
+import io.github.muqhc.kotching.ActivePattern
+import io.github.muqhc.kotching.KotchingDsl
+import io.github.muqhc.kotching.PatternMatchingContext
 import io.github.muqhc.kotching.exception.NoMatchException
 import kotlin.reflect.full.cast
 import kotlin.reflect.full.valueParameters
@@ -20,7 +23,7 @@ fun <T> matching(block: PatternMatchingContext<T>.() -> Unit) =
 
 @KotchingDsl
 @Suppress("UNCHECKED_CAST")
-fun <T,L : Function<R>,R:Any> T.case(activePattern: ActivePattern<T,L>, running: L): R? {
+fun <T,L : Function<R>,R:Any> T.case(activePattern: ActivePattern<T, L>, running: L): R? {
     val inputKClass = activePattern::matching.valueParameters[0].type.jvmErasure
     if (runCatching { inputKClass.cast(this) }.isFailure) return null
     return activePattern.matching(

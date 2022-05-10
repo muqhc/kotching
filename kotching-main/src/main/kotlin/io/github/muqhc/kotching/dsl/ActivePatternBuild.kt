@@ -1,4 +1,4 @@
-package io.github.muqhc.kotching.util
+package io.github.muqhc.kotching.dsl
 
 import io.github.muqhc.kotching.ActivePattern
 import io.github.muqhc.kotching.ActivePatternBuildContext
