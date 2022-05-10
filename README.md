@@ -4,6 +4,8 @@ pattern matching in kotlin
 ## Example Usage
 ```kotlin
 // import
+package io.github.muqhc.kotching.test
+
 import io.github.muqhc.kotching.*
 import io.github.muqhc.kotching.util.*
 
@@ -75,17 +77,9 @@ fun main() {
         case(RGB) { red, green, blue ->
             "Color(red=$red,green=$green,blue=$blue)"
         }
-    }.get() as String
-
-    // get value from pattern matching with property delegation
-    val v2: String by match(Color(0x654321)) {
-        case(RGB) { red, green, blue ->
-            "Color(red=$red,green=$green,blue=$blue)"
-        }
-    }
+    } as String
 
     println(v1)
-    println(v2)
 }
 ```
 [io.github.muqhc.kotching.test.Playground0Kt](kotching-test/src/main/kotlin/io/github/muqhc/kotching/test/Playground0.kt)

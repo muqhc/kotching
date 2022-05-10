@@ -71,15 +71,7 @@ fun main() {
         case(RGB) { red, green, blue ->
             "Color(red=$red,green=$green,blue=$blue)"
         }
-    }.get() as String
-
-    // get value from pattern matching with property delegation
-    val v2: String by match(Color(0x654321)) {
-        case(RGB) { red, green, blue ->
-            "Color(red=$red,green=$green,blue=$blue)"
-        }
-    }
+    } as String
 
     println(v1)
-    println(v2)
 }

@@ -1,13 +1,9 @@
 package io.github.muqhc.kotching
 
-import io.github.muqhc.kotching.util.Exported
-import kotlin.reflect.full.*
-import kotlin.reflect.jvm.jvmErasure
-
 @KotchingDsl
 class PatternMatchingContext<T>(val input: T) {
     internal var isEnd = false
-    internal var result = Exported(null)
+    internal var result: Any? = null
 
     @KotchingDsl
     fun <L : Function<Any>> case(activePattern: ActivePattern<T,L>, running: L) {
@@ -16,7 +12,7 @@ class PatternMatchingContext<T>(val input: T) {
             if (activePattern.checkRequire(input)) {
                 result = activePattern.matching(
                     input, running
-                ).let { Exported { it } }
+                )
                 isEnd = true
             }
         } catch (e: ClassCastException) {  }
@@ -27,7 +23,7 @@ class PatternMatchingContext<T>(val input: T) {
     fun <T> case(running: (T) -> Any) {
         if (isEnd) return
         (input as? T)?.let {
-            result = Exported { running(it) }
+            result = running(it)
             isEnd = true
         }
     }
@@ -35,7 +31,7 @@ class PatternMatchingContext<T>(val input: T) {
     @KotchingDsl
     fun else_(running: (T) -> Any) {
         if (isEnd) return
-        result = Exported { running(input) }
+        result = running(input)
         isEnd = true
     }
 }
