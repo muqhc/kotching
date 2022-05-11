@@ -93,6 +93,8 @@ fun main() {
 // import
 import io.github.muqhc.kotching.dsl.*
 import io.github.muqhc.kotching.util.monad.Either
+import io.github.muqhc.kotching.util.monad.Either.Companion.Left
+import io.github.muqhc.kotching.util.monad.Either.Companion.Right
 
 // create pattern matching function
 val printColor = function(RGB) { r,g,b ->
@@ -116,8 +118,8 @@ fun main() {
 
     // Either Monad pattern matching
     match(intOrString) {
-        case(Either.Left()) { println("$it is Int") }
-        case(Either.Right()) { println("$it is String") }
+        case(Left()) { println("$it is Int") }
+        case(Right()) { println("$it is String") }
     }
 }
 ```
