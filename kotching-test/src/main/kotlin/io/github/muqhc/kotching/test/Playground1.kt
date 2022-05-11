@@ -23,7 +23,7 @@ fun main() {
     // either int or string ( Either<Int,String> )
     val intOrString = "3OO".toIntOrString()
 
-    // 'Either' monad pattern matching
+    // Either Monad pattern matching
     match(intOrString) {
         case(Either.Left()) { println("$it is Int") }
         case(Either.Right()) { println("$it is String") }
