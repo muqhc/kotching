@@ -1,6 +1,5 @@
 package io.github.muqhc.kotching.test
 
-import io.github.muqhc.kotching.*
 import io.github.muqhc.kotching.dsl.*
 import io.github.muqhc.kotching.util.monad.Either
 
@@ -26,12 +25,8 @@ fun main() {
     printColor(strangeColor(magenta) as Color)
 
 
-    val textList = listOf(
-        "123","12.32","abc","100","1OO"
-    ).map { it.toIntOrString() }
-
-    textList.map(matching {
-        case(Either.Left()) { println("$it is Integer!") }
-        case(Either.Right()) { println("$it is Not Integer!") }
-    })
+    match("1OO".toIntOrString()) {
+        case(Either.Left()) { println("$it is Int") }
+        case(Either.Right()) { println("$it is String") }
+    }
 }
