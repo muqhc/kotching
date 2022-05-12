@@ -12,10 +12,12 @@ class Either<L,R> {
     constructor(w: WildCard, right: R) { this.right = right }
 
     companion object {
+        @JvmStatic
         fun <L,R> Left() = ActivePattern<Either<L,R>,(L)->Any> {
             export(input.left!!)
         }.require { it.left != null }
 
+        @JvmStatic
         fun <L,R> Right() = ActivePattern<Either<L,R>,(R)->Any> {
             export(input.right!!)
         }.require { it.right != null }
